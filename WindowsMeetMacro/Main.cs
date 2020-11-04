@@ -49,6 +49,8 @@ namespace WindowsMeetMacro
                 string scheduleType = settingSaver.Setting[Setting.Attributes.SCHEDULE_TYPE];
                 string classroom = settingSaver.Setting[Setting.Attributes.CLASSROOM];
                 int timeout = int.Parse(settingSaver.Setting[Setting.Attributes.ELEMENT_LOAD_TIMEOUT]);
+                int startOffset = int.Parse(settingSaver.Setting[Setting.Attributes.START_TIME_OFFSET]);
+                int endOffset = int.Parse(settingSaver.Setting[Setting.Attributes.END_TIME_OFFSET]);
 
                 Thread thread = new Thread(new ThreadStart(() =>
                 {
@@ -57,7 +59,7 @@ namespace WindowsMeetMacro
                         ScheduleSaver scheduleSaver = new ScheduleSaver(scheduleType, classroom);
 
                         logView.Logger.AddLog("Start!");
-                        using Macro macro = new Macro(scheduleSaver.schedule, timeout, logView.Logger);
+                        using Macro macro = new Macro(scheduleSaver.schedule, timeout, logView.Logger, startOffset, endOffset);
                         macro.Run(id, pw);
                     } catch(Exception e)
                     {

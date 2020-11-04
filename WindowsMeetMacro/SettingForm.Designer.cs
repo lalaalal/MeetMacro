@@ -37,15 +37,21 @@
             this.label3 = new System.Windows.Forms.Label();
             this.elementLoadTimeout = new System.Windows.Forms.NumericUpDown();
             this.saveButton = new System.Windows.Forms.Button();
+            this.label4 = new System.Windows.Forms.Label();
+            this.label5 = new System.Windows.Forms.Label();
+            this.startOffset = new System.Windows.Forms.NumericUpDown();
+            this.endOffset = new System.Windows.Forms.NumericUpDown();
             this.tableLayoutPanel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.elementLoadTimeout)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.startOffset)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.endOffset)).BeginInit();
             this.SuspendLayout();
             // 
             // viewLog
             // 
             this.viewLog.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
             this.viewLog.AutoSize = true;
-            this.viewLog.Location = new System.Drawing.Point(4, 99);
+            this.viewLog.Location = new System.Drawing.Point(4, 160);
             this.viewLog.Name = "viewLog";
             this.viewLog.Size = new System.Drawing.Size(99, 19);
             this.viewLog.TabIndex = 0;
@@ -82,18 +88,24 @@
             this.tableLayoutPanel1.Controls.Add(this.scheduleType, 1, 2);
             this.tableLayoutPanel1.Controls.Add(this.classroom, 1, 1);
             this.tableLayoutPanel1.Controls.Add(this.label2, 0, 1);
-            this.tableLayoutPanel1.Controls.Add(this.viewLog, 0, 3);
             this.tableLayoutPanel1.Controls.Add(this.label1, 0, 0);
             this.tableLayoutPanel1.Controls.Add(this.label3, 0, 2);
             this.tableLayoutPanel1.Controls.Add(this.elementLoadTimeout, 1, 0);
+            this.tableLayoutPanel1.Controls.Add(this.viewLog, 0, 5);
+            this.tableLayoutPanel1.Controls.Add(this.label4, 0, 3);
+            this.tableLayoutPanel1.Controls.Add(this.label5, 0, 4);
+            this.tableLayoutPanel1.Controls.Add(this.startOffset, 1, 3);
+            this.tableLayoutPanel1.Controls.Add(this.endOffset, 1, 4);
             this.tableLayoutPanel1.Location = new System.Drawing.Point(12, 12);
             this.tableLayoutPanel1.Name = "tableLayoutPanel1";
-            this.tableLayoutPanel1.RowCount = 4;
+            this.tableLayoutPanel1.RowCount = 6;
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle());
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle());
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle());
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle());
-            this.tableLayoutPanel1.Size = new System.Drawing.Size(338, 128);
+            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle());
+            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle());
+            this.tableLayoutPanel1.Size = new System.Drawing.Size(338, 189);
             this.tableLayoutPanel1.TabIndex = 4;
             // 
             // scheduleType
@@ -132,7 +144,7 @@
             // 
             // saveButton
             // 
-            this.saveButton.Location = new System.Drawing.Point(275, 146);
+            this.saveButton.Location = new System.Drawing.Point(275, 207);
             this.saveButton.Name = "saveButton";
             this.saveButton.Size = new System.Drawing.Size(75, 23);
             this.saveButton.TabIndex = 5;
@@ -140,11 +152,47 @@
             this.saveButton.UseVisualStyleBackColor = true;
             this.saveButton.Click += new System.EventHandler(this.saveButton_Click);
             // 
+            // label4
+            // 
+            this.label4.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
+            this.label4.AutoSize = true;
+            this.label4.Location = new System.Drawing.Point(4, 98);
+            this.label4.Name = "label4";
+            this.label4.Size = new System.Drawing.Size(99, 15);
+            this.label4.TabIndex = 6;
+            this.label4.Text = "시작 오프셋 (분)";
+            // 
+            // label5
+            // 
+            this.label5.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
+            this.label5.AutoSize = true;
+            this.label5.Location = new System.Drawing.Point(4, 128);
+            this.label5.Name = "label5";
+            this.label5.Size = new System.Drawing.Size(99, 15);
+            this.label5.TabIndex = 7;
+            this.label5.Text = "종료 오프셋 (분)";
+            // 
+            // startOffset
+            // 
+            this.startOffset.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
+            this.startOffset.Location = new System.Drawing.Point(110, 94);
+            this.startOffset.Name = "startOffset";
+            this.startOffset.Size = new System.Drawing.Size(224, 23);
+            this.startOffset.TabIndex = 8;
+            // 
+            // endOffset
+            // 
+            this.endOffset.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
+            this.endOffset.Location = new System.Drawing.Point(110, 124);
+            this.endOffset.Name = "endOffset";
+            this.endOffset.Size = new System.Drawing.Size(224, 23);
+            this.endOffset.TabIndex = 9;
+            // 
             // SettingForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(363, 173);
+            this.ClientSize = new System.Drawing.Size(363, 261);
             this.Controls.Add(this.saveButton);
             this.Controls.Add(this.tableLayoutPanel1);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
@@ -155,6 +203,8 @@
             this.tableLayoutPanel1.ResumeLayout(false);
             this.tableLayoutPanel1.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.elementLoadTimeout)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.startOffset)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.endOffset)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -170,5 +220,9 @@
         private System.Windows.Forms.TextBox classroom;
         private System.Windows.Forms.NumericUpDown elementLoadTimeout;
         private System.Windows.Forms.Button saveButton;
+        private System.Windows.Forms.Label label4;
+        private System.Windows.Forms.Label label5;
+        private System.Windows.Forms.NumericUpDown startOffset;
+        private System.Windows.Forms.NumericUpDown endOffset;
     }
 }

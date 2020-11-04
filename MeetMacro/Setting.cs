@@ -11,6 +11,8 @@ namespace MeetMacro
             public static readonly string VIEW_LOG = "VIEW_LOG";
             public static readonly string CLASSROOM = "CLASSROOM";
             public static readonly string SCHEDULE_TYPE = "SCHEDULE_TYPE";
+            public static readonly string START_TIME_OFFSET = "START_TIME_OFFSET";
+            public static readonly string END_TIME_OFFSET = "END_TIME_OFFSET";
         }
 
         public static Setting Default => GetDefault();
@@ -22,7 +24,9 @@ namespace MeetMacro
                 [Attributes.ELEMENT_LOAD_TIMEOUT] = "10",
                 [Attributes.VIEW_LOG] = "true",
                 [Attributes.CLASSROOM] = "307",
-                [Attributes.SCHEDULE_TYPE] = "isdj"
+                [Attributes.SCHEDULE_TYPE] = "isdj",
+                [Attributes.START_TIME_OFFSET] = "2",
+                [Attributes.END_TIME_OFFSET] = "1",
             };
 
             return defaultSetting;
