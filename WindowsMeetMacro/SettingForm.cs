@@ -23,6 +23,8 @@ namespace WindowsMeetMacro
             viewLog.Checked = settingSaver.Setting[Setting.Attributes.VIEW_LOG] == "true";
             classroom.Text = settingSaver.Setting[Setting.Attributes.CLASSROOM];
             scheduleType.Text = settingSaver.Setting[Setting.Attributes.SCHEDULE_TYPE];
+            startOffset.Text = settingSaver.Setting[Setting.Attributes.START_TIME_OFFSET];
+            endOffset.Text = settingSaver.Setting[Setting.Attributes.END_TIME_OFFSET];
         }
 
         private void SettingForm_Load(object sender, EventArgs e)
@@ -36,6 +38,8 @@ namespace WindowsMeetMacro
             settingSaver.Setting[Setting.Attributes.VIEW_LOG] = viewLog.Checked == true ? "true" : "false";
             settingSaver.Setting[Setting.Attributes.CLASSROOM] = classroom.Text;
             settingSaver.Setting[Setting.Attributes.SCHEDULE_TYPE] = scheduleType.Text;
+            settingSaver.Setting[Setting.Attributes.START_TIME_OFFSET] = startOffset.Text;
+            settingSaver.Setting[Setting.Attributes.END_TIME_OFFSET] = endOffset.Text;
 
             settingSaver.Save();
             MessageBox.Show("저장했음", "저장");

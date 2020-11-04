@@ -27,18 +27,18 @@ namespace MeetMacro
             public static readonly string RETURN_HOME_BUTTON_XPATH = "//*[@id=\"ow3\"]/div/div[2]/div[2]/div/span/span";
         }
 
-        private ChromeDriver driver;
+        private readonly ChromeDriver driver;
 
-        private Schedule schedule;
+        private readonly Schedule schedule;
 
-        private static readonly Schedule.Time START_OFFSET = new Schedule.Time(0, 2);
-        private static readonly Schedule.Time END_OFFSET = new Schedule.Time(0, 1);
+        private readonly Schedule.Time startOffset;
+        private readonly Schedule.Time endOffset;
 
-        private int timeout;
+        private readonly int timeout;
 
         private Logger logger;
 
-        public Macro(Schedule schedule, int timeout, Logger logger)
+        public Macro(Schedule schedule, int timeout, Logger logger, int startOffset = 0, int endOffset = 0)
         {
             ChromeDriverService chromeDriverService = ChromeDriverService.CreateDefaultService();
             chromeDriverService.HideCommandPromptWindow = true;
@@ -49,6 +49,8 @@ namespace MeetMacro
             this.schedule = schedule;
             this.timeout = timeout;
             this.logger = logger;
+            this.startOffset = new Schedule.Time(0, startOffset);
+            this.endOffset = new Schedule.Time(0, endOffset);
         }
 
         public void Dispose()
@@ -132,12 +134,12 @@ namespace MeetMacro
 
                 logger.AddLog("Code : " + code);
 
-                logger.AddLog("Waiting (enter) until " + (nextClassStartTime - START_OFFSET).ToString());
-                SpinWait.SpinUntil(() => IsTimeToEnter(nextClassStartTime, START_OFFSET));
+                logger.AddLog("Waiting (enter) until " + (nextClassStartTime - startOffset).ToString());
+                SpinWait.SpinUntil(() => IsTimeToEnter(nextClassStartTime, startOffset));
                 EnterMeet(code);
 
-                logger.AddLog("Waiting (exit) until " + (nextClassEndTime - START_OFFSET).ToString());
-                SpinWait.SpinUntil(() => IsTimeToExit(nextClassEndTime, END_OFFSET));
+                logger.AddLog("Waiting (exit) until " + (nextClassEndTime + endOffset).ToString());
+                SpinWait.SpinUntil(() => IsTimeToExit(nextClassEndTime, endOffset));
                 ExitMeet();
             }
             logger.AddLog("Ended");
