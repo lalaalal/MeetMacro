@@ -1,11 +1,14 @@
-
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 15
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MeetMacroTest", "MeetMacroTest\MeetMacroTest.csproj", "{89D0238A-D898-4E57-ADB4-745B61E04A51}"
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.30621.155
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MeetMacroTest", "MeetMacroTest\MeetMacroTest.csproj", "{89D0238A-D898-4E57-ADB4-745B61E04A51}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MeetMacro", "MeetMacro\MeetMacro.csproj", "{08656CA2-2DF8-49D0-942A-9DBA16A906C1}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MeetMacro", "MeetMacro\MeetMacro.csproj", "{08656CA2-2DF8-49D0-942A-9DBA16A906C1}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ConsoleMeetMacro", "ConsoleMeetMacro\ConsoleMeetMacro.csproj", "{A7A15D34-A7F5-4E27-BE6F-78C20C8C7100}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ConsoleMeetMacro", "ConsoleMeetMacro\ConsoleMeetMacro.csproj", "{A7A15D34-A7F5-4E27-BE6F-78C20C8C7100}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WindowsMeetMacro", "WindowsMeetMacro\WindowsMeetMacro.csproj", "{3D718C41-AD13-4189-AE5F-C42828F625A0}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -25,6 +28,16 @@ Global
 		{A7A15D34-A7F5-4E27-BE6F-78C20C8C7100}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A7A15D34-A7F5-4E27-BE6F-78C20C8C7100}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{A7A15D34-A7F5-4E27-BE6F-78C20C8C7100}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3D718C41-AD13-4189-AE5F-C42828F625A0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3D718C41-AD13-4189-AE5F-C42828F625A0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3D718C41-AD13-4189-AE5F-C42828F625A0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3D718C41-AD13-4189-AE5F-C42828F625A0}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {6CCE9514-DDAC-4E27-96D0-6D16863B25D8}
 	EndGlobalSection
 	GlobalSection(MonoDevelopProperties) = preSolution
 		Policies = $0

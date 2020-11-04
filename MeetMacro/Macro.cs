@@ -9,7 +9,7 @@ namespace MeetMacro
 {
     public class Macro : IDisposable
     {
-        private class MeetXPath
+        private static class MeetXPath
         {
             public static readonly string LOGIN_BUTTON_XPATH = "//*[@id=\"gb_70\"]";
             public static readonly string ID_INPUT_XPATH = "//*[@id=\"identifierId\"]";
@@ -36,16 +36,19 @@ namespace MeetMacro
 
         private int timeout;
 
-        public Macro(Schedule schedule, int timeout)
+        private Logger logger;
+
+        public Macro(Schedule schedule, int timeout, Logger logger)
         {
             ChromeDriverService chromeDriverService = ChromeDriverService.CreateDefaultService();
-            chromeDriverService.HideCommandPromptWindow = false;
+            chromeDriverService.HideCommandPromptWindow = true;
             ChromeOptions options = new ChromeOptions();
 
             driver = new ChromeDriver(chromeDriverService, options);
 
             this.schedule = schedule;
             this.timeout = timeout;
+            this.logger = logger;
         }
 
         public void Dispose()
@@ -63,6 +66,7 @@ namespace MeetMacro
         {
             driver.Navigate().GoToUrl("https://google.com/");
 
+            
             LoadElement(MeetXPath.LOGIN_BUTTON_XPATH).Click();
             LoadElement(MeetXPath.ID_INPUT_XPATH).SendKeys(id);
             LoadElement(MeetXPath.ID_NEXT_BUTTON_XPATH).Click();
@@ -73,30 +77,49 @@ namespace MeetMacro
 
         private void EnterMeet(string code)
         {
+            logger.AddLog("Entering Meet : " + code);
             LoadElement(MeetXPath.CODE_ENTERANCE_BUTTON_XPATH).Click();
             LoadElement(MeetXPath.CODE_INPUT_XPATH).SendKeys(code);
             Thread.Sleep(500);
             LoadElement(MeetXPath.CODE_ENTER_BUTTON_XPATH).Click();
             try
             {
-                //LoadElement(MeetXPath.TOGGLE_CAMERA_BUTTON_XPATH).Click();
+                LoadElement(MeetXPath.TOGGLE_CAMERA_BUTTON_XPATH);
+                CheckPerm();
+                logger.AddLog("Waiting " + timeout + " sec");
+                Thread.Sleep(1000 * timeout);
+                logger.AddLog("Entering");
                 LoadElement(MeetXPath.ENTER_MEET_BUTTON_XPATH).Click();
             }
-            catch (ElementNotInteractableException)
+            catch (Exception)
             {
+                logger.AddLog("Entering Failed, Retry");
                 EnterMeet(code);
+            }
+        }
+
+        private void CheckPerm()
+        {
+            try
+            {
+                LoadElement("//*[@id=\"yDmH0d\"]/div[3]/div/div[2]/div[3]/div/span/span").Click();
+            }
+            catch (Exception)
+            {
+
             }
         }
 
         private void ExitMeet()
         {
-            LoadElement(MeetXPath.EXIT_MEET_BUTTON_XPATH).Click();
-            LoadElement(MeetXPath.RETURN_HOME_BUTTON_XPATH).Click();
+            driver.Navigate().GoToUrl("https://meet.google.com");
         }
 
         public void Run(string id, string pw)
         {
+            logger.AddLog("Login with " + id);
             Login(id, pw);
+            logger.AddLog("Login Succeeded");
             driver.Navigate().GoToUrl("https://meet.google.com");
 
             int dayOfWeek = (int)(DateTime.Now.DayOfWeek - 1);
@@ -107,20 +130,25 @@ namespace MeetMacro
                 Schedule.Time nextClassStartTime = schedule.StartTime[nextClassNo];
                 Schedule.Time nextClassEndTime = schedule.EndTime[nextClassNo];
 
-                SpinWait.SpinUntil(() => isTimeToEnter(nextClassStartTime, START_OFFSET));
+                logger.AddLog("Code : " + code);
+
+                logger.AddLog("Waiting (enter) until " + (nextClassStartTime - START_OFFSET).ToString());
+                SpinWait.SpinUntil(() => IsTimeToEnter(nextClassStartTime, START_OFFSET));
                 EnterMeet(code);
 
-                SpinWait.SpinUntil(() => isTimeToExit(nextClassEndTime, END_OFFSET));
+                logger.AddLog("Waiting (exit) until " + (nextClassEndTime - START_OFFSET).ToString());
+                SpinWait.SpinUntil(() => IsTimeToExit(nextClassEndTime, END_OFFSET));
                 ExitMeet();
             }
+            logger.AddLog("Ended");
         }
 
-        private bool isTimeToEnter(Schedule.Time startTime, Schedule.Time offset)
+        private bool IsTimeToEnter(Schedule.Time startTime, Schedule.Time offset)
         {
             return Schedule.Time.Now >= (startTime - offset);
         }
 
-        private bool isTimeToExit(Schedule.Time endTime, Schedule.Time offset)
+        private bool IsTimeToExit(Schedule.Time endTime, Schedule.Time offset)
             => Schedule.Time.Now >= endTime + offset;
 
         private bool DoesSchoolEnd()

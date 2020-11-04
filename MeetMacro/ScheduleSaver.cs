@@ -3,25 +3,16 @@ using System.IO;
 
 namespace MeetMacro
 {
-    public class ScheduleSaver
+    public class ScheduleSaver : Saver
     {
         public static readonly string FILE_NAME = "schedule.txt";
 
-        private FileManager fileManager;
         public Schedule schedule { private set; get; }
 
-        public ScheduleSaver(string scheduleType, string defaultClassroom)
+        public ScheduleSaver(string scheduleType, string defaultClassroom) : base(scheduleType + "-" + FILE_NAME)
         {
-            fileManager = new FileManager(scheduleType + "-" + FILE_NAME);
             schedule = Schedule.CreateSchedule(scheduleType);
-            try
-            {
-                Load();
-            }
-            catch (FormatException)
-            {
-                schedule.SetDefault(defaultClassroom);
-            }
+            Load();
         }
 
         public void Load()
@@ -37,21 +28,20 @@ namespace MeetMacro
                 if (codes.Length != 9)
                     throw new FormatException("Length of class is not correct");
                 for (int classNo = 0; classNo < schedule.StartTime.Length; classNo++)
-                    schedule.SetCode(dayOfWeek++, classNo, codes[classNo]);
+                    schedule.SetCode(dayOfWeek, classNo, codes[classNo]);
+                dayOfWeek++;
             }
-            if (dayOfWeek != 4)
+            if (dayOfWeek != 5)
                 throw new FormatException("Length of day of week is not correct");
         }
 
-        public void Save() => fileManager.Write(Save);
-
-        private void Save(TextWriter writer)
+        protected override void Save(TextWriter writer)
         {
             for (int dayOfWeek = 0; dayOfWeek < 5; dayOfWeek++)
             {
                 string line = "";
                 for (int classNo = 0; classNo < schedule.StartTime.Length; classNo++)
-                    line += schedule.Code[dayOfWeek, classNo];
+                    line += schedule.Code[dayOfWeek, classNo] + ";";
 
                 writer.WriteLine(line);
             }

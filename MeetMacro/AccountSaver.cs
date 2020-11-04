@@ -5,16 +5,15 @@ using System.Security.Cryptography;
 
 namespace MeetMacro
 {
-    public class AccountSaver
+    public class AccountSaver : Saver
     {
         public static readonly string FILE_NAME = "account.txt";
-        private FileManager fileManager = new FileManager(FILE_NAME);
 
         private static readonly string KEY = "@MeetMacro";
         public string Id { private set; get; }
         public string Pw { private set; get; }
 
-        public AccountSaver() => Load();
+        public AccountSaver() : base(FILE_NAME) => Load();
 
         public bool AccountExists()
             => Id != null && Pw != null;
@@ -35,9 +34,7 @@ namespace MeetMacro
             Pw = Decrypt(lines[1], Id + KEY);
         }
 
-        public void Save() => fileManager.Write(Save);
-
-        private void Save(TextWriter writer)
+        protected override void Save(TextWriter writer)
         {
             writer.WriteLine(Id);
             writer.WriteLine(Encrypt(Pw, Id + KEY));

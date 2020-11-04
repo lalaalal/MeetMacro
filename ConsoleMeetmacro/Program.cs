@@ -15,22 +15,30 @@ namespace ConsoleMeetMacro
                 string response = Console.ReadLine();
 
                 if (response != "y" && response != "Y")
-                {
-                    Console.Write("ID : ");
-                    string id = Console.ReadLine();
-                    Console.Write("PW : ");
-                    string pw = GetPassword();
-
-                    accountSaver.SetAccount(id, pw);
-                    accountSaver.Save();
-                }
+                    Login(accountSaver);
+            }
+            else
+            {
+                Login(accountSaver);
             }
 
             ScheduleSaver scheduleFileManager = new ScheduleSaver("isdj", "307");
-            using Macro macro = new Macro(scheduleFileManager.schedule, 15);
+            Logger logger = new ConsoleLogger();
+            using Macro macro = new Macro(scheduleFileManager.schedule, 15, logger);
 
             macro.Run(accountSaver.Id, accountSaver.Pw);
+        }
 
+        public static void Login(AccountSaver accountSaver)
+        {
+            Console.Write("ID : ");
+            string id = Console.ReadLine();
+            Console.Write("PW : ");
+            string pw = GetPassword();
+            Console.WriteLine();
+
+            accountSaver.SetAccount(id, pw);
+            accountSaver.Save();
         }
 
         public static string GetPassword()
