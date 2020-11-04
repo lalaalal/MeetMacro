@@ -23,6 +23,7 @@ namespace WindowsMeetMacro
             } catch (FormatException e)
             {
                 MessageBox.Show(e.Message, "저런..");
+                scheduleSaver.schedule.SetDefault(classroom);
             }
             
             InitializeComponent();
