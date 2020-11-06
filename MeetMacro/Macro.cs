@@ -25,6 +25,7 @@ namespace MeetMacro
             public static readonly string ENTER_MEET_BUTTON_XPATH = "//*[@id=\"yDmH0d\"]/c-wiz/div/div/div[7]/div[3]/div/div/div[2]/div/div[1]/div[2]/div/div[2]/div/div[1]/div[1]/span";
             public static readonly string EXIT_MEET_BUTTON_XPATH = "//*[@id=\"ow3\"]/div[1]/div/div[7]/div[3]/div[9]/div[2]/div[2]/div";
             public static readonly string RETURN_HOME_BUTTON_XPATH = "//*[@id=\"ow3\"]/div/div[2]/div[2]/div/span/span";
+            public static readonly string MEET_NOT_STARTED_XPATH = "//*[@id=\"yDmH0d\"]/c-wiz/div/div[2]/div/div/span/span";
         }
 
         private readonly ChromeDriver driver;
@@ -86,10 +87,11 @@ namespace MeetMacro
             LoadElement(MeetXPath.CODE_ENTER_BUTTON_XPATH).Click();
             try
             {
+                CheckMeetNotStarted();
                 LoadElement(MeetXPath.TOGGLE_CAMERA_BUTTON_XPATH);
                 CheckPerm();
-                logger.AddLog("Waiting " + timeout + " sec");
-                Thread.Sleep(1000 * timeout);
+                //logger.AddLog("Waiting " + timeout + " sec");
+                //Thread.Sleep(1000 * timeout);
                 logger.AddLog("Entering");
                 LoadElement(MeetXPath.ENTER_MEET_BUTTON_XPATH).Click();
             }
@@ -97,6 +99,17 @@ namespace MeetMacro
             {
                 logger.AddLog("Entering Failed, Retry");
                 EnterMeet(code);
+            }
+        }
+
+        private void CheckMeetNotStarted()
+        {
+            try
+            {
+                LoadElement(MeetXPath.MEET_NOT_STARTED_XPATH).Click();
+            } catch (Exception)
+            {
+
             }
         }
 

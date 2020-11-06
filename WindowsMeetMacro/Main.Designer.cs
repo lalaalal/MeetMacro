@@ -132,7 +132,7 @@
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(192, 15);
             this.label1.TabIndex = 10;
-            this.label1.Text = "* 첮 입장 후 카메라 권한 차단하기";
+            this.label1.Text = "* 첫 입장 후 카메라 권한 차단하기";
             // 
             // Main
             // 

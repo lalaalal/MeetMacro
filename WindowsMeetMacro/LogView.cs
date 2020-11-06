@@ -4,6 +4,7 @@ using System.ComponentModel;
 using System.Data;
 using System.Drawing;
 using System.Linq;
+using System.Security.Claims;
 using System.Text;
 using System.Windows.Forms;
 
@@ -13,10 +14,20 @@ namespace WindowsMeetMacro
     {
         public WindowsLogger Logger { private set; get; }
 
+        public delegate void CrossThreadSafetySetText(string text);
+
+        public void CSafeAddText(string text)
+        {
+            if (logRichTextBox.InvokeRequired)
+                logRichTextBox.Invoke(new CrossThreadSafetySetText(CSafeAddText), text);
+            else
+                logRichTextBox.Text += text;
+        }
+
         public LogView()
         {
             InitializeComponent();
-            Logger = new WindowsLogger(logRichTextBox);
+            Logger = new WindowsLogger(CSafeAddText);
         }
 
         private void LogView_Load(object sender, EventArgs e)
