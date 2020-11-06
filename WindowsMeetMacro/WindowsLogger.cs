@@ -1,26 +1,15 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-
-using System.Windows.Forms;
-
-using MeetMacro;
+﻿using MeetMacro;
 
 namespace WindowsMeetMacro
 {
     public class WindowsLogger : Logger
     {
-        private RichTextBox textBox;
+        private readonly LogView.CrossThreadSafetySetText CSafetyAddText;
 
-        public WindowsLogger(RichTextBox textBox)
-        {
-            this.textBox = textBox;
-        }
+        public WindowsLogger(LogView.CrossThreadSafetySetText CSafetyAddText)
+            => this.CSafetyAddText = CSafetyAddText;
 
         public override void Log(string log)
-        {
-            textBox.Text += log + "\n";
-        }
+            => CSafetyAddText(log + "\n");
     }
 }

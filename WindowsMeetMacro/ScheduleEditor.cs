@@ -58,7 +58,7 @@ namespace WindowsMeetMacro
             }
 
             scheduleSaver.Save();
-            MessageBox.Show("저장했음!", "저장");
+            MessageBox.Show("저장했음! - 실행 중인 매크로에 적용되지 않음", "저장");
         }
 
         private void ScheduleEditor_Load(object sender, EventArgs e)
