@@ -7,6 +7,10 @@
     <SignAssembly>true</SignAssembly>
     <DelaySign>true</DelaySign>
     <AssemblyOriginatorKeyFile>WindowsMeetMacro.pfx</AssemblyOriginatorKeyFile>
+    <GeneratePackageOnBuild>false</GeneratePackageOnBuild>
+    <AssemblyVersion>1.1</AssemblyVersion>
+    <FileVersion>1.1</FileVersion>
+    <Version>1.1</Version>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
