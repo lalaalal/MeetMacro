@@ -8,7 +8,7 @@ namespace WindowsMeetMacro
 {
     public partial class Main : Form
     {
-        private AccountSaver accountSaver = new AccountSaver();
+        private readonly AccountSaver accountSaver = new AccountSaver();
 
         public Main()
         {
@@ -42,7 +42,7 @@ namespace WindowsMeetMacro
                 accountSaver.Save();
 
                 LogView logView = new LogView();
-                SettingSaver settingSaver = new SettingSaver();
+                SettingSaver settingSaver = SettingSaver.Instance;
                 if (settingSaver.Setting[Setting.Attributes.VIEW_LOG] == "true")
                     logView.Show();
 
@@ -56,10 +56,9 @@ namespace WindowsMeetMacro
                 {
                     try
                     {
-                        ScheduleSaver scheduleSaver = new ScheduleSaver(scheduleType, classroom);
+                        ScheduleSaver scheduleSaver = new ScheduleSaver(settingSaver.Setting);
 
-                        logView.Logger.AddLog("Start!");
-                        using Macro macro = new Macro(scheduleSaver.schedule, timeout, logView.Logger, startOffset, endOffset);
+                        using Macro macro = new Macro(scheduleSaver.Schedule, timeout, logView.Logger, startOffset, endOffset);
                         macro.Run(id, pw);
                     } catch(Exception e)
                     {
@@ -67,7 +66,6 @@ namespace WindowsMeetMacro
                     } finally
                     {
                         EnableLogin();
-                        logView.Logger.AddLog("End");
                     }
                     
                 }));

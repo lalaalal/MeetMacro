@@ -12,12 +12,12 @@ namespace WindowsMeetMacro
 {
     public partial class SettingForm : Form
     {
-        private SettingSaver settingSaver;
+        private readonly SettingSaver settingSaver;
 
         public SettingForm()
         {
             InitializeComponent();
-            settingSaver = new SettingSaver();
+            settingSaver = SettingSaver.Instance;
 
             elementLoadTimeout.Text = settingSaver.Setting[Setting.Attributes.ELEMENT_LOAD_TIMEOUT];
             viewLog.Checked = settingSaver.Setting[Setting.Attributes.VIEW_LOG] == "true";

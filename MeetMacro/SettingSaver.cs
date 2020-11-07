@@ -7,11 +7,19 @@ namespace MeetMacro
 {
     public class SettingSaver : Saver
     {
+        private static SettingSaver _instance = null;
+
+        public static SettingSaver Instance
+        {
+            private set => _instance = value;
+            get => _instance ?? new SettingSaver();
+        }
+
         private static readonly string FILE_NAME = "settings.conf";
 
         public Setting Setting { private set; get; }
 
-        public SettingSaver() : base(FILE_NAME)
+        private SettingSaver() : base(FILE_NAME)
         {
             Setting = Setting.Default;
             Load();
