@@ -13,7 +13,7 @@ namespace WindowsMeetMacro
 
         public ScheduleEditor()
         {
-            settingSaver = new SettingSaver();
+            settingSaver = SettingSaver.Instance;
 
             string scheduleType = settingSaver.Setting[Setting.Attributes.SCHEDULE_TYPE];
             string classroom = settingSaver.Setting[Setting.Attributes.CLASSROOM];
@@ -23,7 +23,7 @@ namespace WindowsMeetMacro
             } catch (FormatException e)
             {
                 MessageBox.Show(e.Message, "저런..");
-                scheduleSaver.schedule.SetDefault(classroom);
+                scheduleSaver.Schedule.SetDefault(classroom);
             }
             
             InitializeComponent();
@@ -32,7 +32,7 @@ namespace WindowsMeetMacro
                 for (int classNo = 1; classNo < 8; classNo++)
                 {
                     TextBox textBox = new TextBox();
-                    textBox.Text = scheduleSaver.schedule.Code[dayOfWeek, classNo];
+                    textBox.Text = scheduleSaver.Schedule.Code[dayOfWeek, classNo];
                     textBox.Anchor = AnchorStyles.Left | AnchorStyles.Right;
 
                     textBoxes[dayOfWeek, classNo - 1] = textBox;
@@ -53,7 +53,7 @@ namespace WindowsMeetMacro
                 for (int classNo = 1; classNo < 8; classNo++)
                 {
                     var textBox = textBoxes[dayOfWeek, classNo - 1];
-                    scheduleSaver.schedule.SetCode(dayOfWeek, classNo, textBox.Text);
+                    scheduleSaver.Schedule.SetCode(dayOfWeek, classNo, textBox.Text);
                 }
             }
 

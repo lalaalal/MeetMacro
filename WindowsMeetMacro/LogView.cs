@@ -21,7 +21,12 @@ namespace WindowsMeetMacro
             if (logRichTextBox.InvokeRequired)
                 logRichTextBox.Invoke(new CrossThreadSafetySetText(CSafeAddText), text);
             else
+            {
                 logRichTextBox.Text += text;
+                logRichTextBox.ScrollToCaret();
+                logRichTextBox.Refresh();
+            }
+                
         }
 
         public LogView()

@@ -132,6 +132,7 @@ namespace MeetMacro
 
         public void Run(string id, string pw)
         {
+            logger.AddLog("Start!");
             logger.AddLog("Login with " + id);
             Login(id, pw);
             logger.AddLog("Login Succeeded");

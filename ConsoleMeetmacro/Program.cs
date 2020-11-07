@@ -22,9 +22,9 @@ namespace ConsoleMeetMacro
                 Login(accountSaver);
             }
 
-            ScheduleSaver scheduleFileManager = new ScheduleSaver("isdj", "307");
+            ScheduleSaver scheduleFileManager = new ScheduleSaver(SettingSaver.Instance.Setting);
             Logger logger = new ConsoleLogger();
-            using Macro macro = new Macro(scheduleFileManager.schedule, 15, logger);
+            using Macro macro = new Macro(scheduleFileManager.Schedule, 15, logger);
 
             macro.Run(accountSaver.Id, accountSaver.Pw);
         }
