@@ -23,6 +23,7 @@ namespace MeetMacro
             public static readonly string CODE_ENTER_BUTTON_XPATH = "//*[@id=\"yDmH0d\"]/div[3]/div/div[2]/span/div/div[4]/div[2]/div/span";
             public static readonly string TOGGLE_CAMERA_BUTTON_XPATH = "//*[@id=\"yDmH0d\"]/c-wiz/div/div/div[7]/div[3]/div/div/div[2]/div/div[1]/div[1]/div/div[4]/div[2]/div/div";
             public static readonly string ENTER_MEET_BUTTON_XPATH = "//*[@id=\"yDmH0d\"]/c-wiz/div/div/div[7]/div[3]/div/div/div[2]/div/div[1]/div[2]/div/div[2]/div/div[1]/div[1]/span";
+            public static readonly string ENTER_MEET_BUTTON_ALTER = "//*[@id=\"yDmH0d\"]/c-wiz/div/div/div[8]/div[3]/div/div/div[2]/div/div[1]/div[2]/div/div[2]/div/div[1]/div[1]/span/span";
             public static readonly string EXIT_MEET_BUTTON_XPATH = "//*[@id=\"ow3\"]/div[1]/div/div[7]/div[3]/div[9]/div[2]/div[2]/div";
             public static readonly string RETURN_HOME_BUTTON_XPATH = "//*[@id=\"ow3\"]/div/div[2]/div[2]/div/span/span";
             public static readonly string MEET_NOT_STARTED_XPATH = "//*[@id=\"yDmH0d\"]/c-wiz/div/div[2]/div/div/span/span";
@@ -59,10 +60,15 @@ namespace MeetMacro
             driver.Quit();
         }
 
+        private IWebElement LoadElement(string xpath, int timeout)
+        {
+            WebDriverWait wait = new WebDriverWait(driver, new TimeSpan(0, 0, timeout));
+            return wait.Until(x => x.FindElement(By.XPath(xpath)));
+        }
+
         private IWebElement LoadElement(string xpath)
         {
-            WebDriverWait defaultWait = new WebDriverWait(driver, new TimeSpan(0, 0, timeout));
-            return defaultWait.Until(x => x.FindElement(By.XPath(xpath)));
+            return LoadElement(xpath, timeout);
         }
         
         private void Login(string id, string pw)
@@ -87,18 +93,29 @@ namespace MeetMacro
             LoadElement(MeetXPath.CODE_ENTER_BUTTON_XPATH).Click();
             try
             {
-                CheckMeetNotStarted();
-                LoadElement(MeetXPath.TOGGLE_CAMERA_BUTTON_XPATH);
                 CheckPerm();
-                //logger.AddLog("Waiting " + timeout + " sec");
-                //Thread.Sleep(1000 * timeout);
+                CheckMeetNotStarted();
+                Thread.Sleep(500);
+                
                 logger.AddLog("Entering");
-                LoadElement(MeetXPath.ENTER_MEET_BUTTON_XPATH).Click();
+                EnterMeetButton();
             }
             catch (Exception)
             {
                 logger.AddLog("Entering Failed, Retry");
                 EnterMeet(code);
+            }
+        }
+
+        private void EnterMeetButton()
+        {
+            try
+            {
+                LoadElement(MeetXPath.ENTER_MEET_BUTTON_XPATH, timeout / 2).Click();
+            }
+            catch (Exception)
+            {
+                LoadElement(MeetXPath.ENTER_MEET_BUTTON_ALTER, timeout / 2).Click();
             }
         }
 

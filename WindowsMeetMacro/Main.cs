@@ -8,6 +8,8 @@ namespace WindowsMeetMacro
 {
     public partial class Main : Form
     {
+        public delegate void CrossThreadSafetyEnableLogin();
+
         private readonly AccountSaver accountSaver = new AccountSaver();
 
         public Main()
@@ -85,9 +87,18 @@ namespace WindowsMeetMacro
 
         private void EnableLogin()
         {
-            idTextBox.Enabled = true;
-            pwTextBox.Enabled = true;
-            loginButton.Enabled = true;
+            if (idTextBox.InvokeRequired)
+            {
+                idTextBox.Invoke(new CrossThreadSafetyEnableLogin(EnableLogin));
+                pwTextBox.Invoke(new CrossThreadSafetyEnableLogin(EnableLogin));
+                loginButton.Invoke(new CrossThreadSafetyEnableLogin(EnableLogin));
+            } 
+            else
+            {
+                idTextBox.Enabled = true;
+                pwTextBox.Enabled = true;
+                loginButton.Enabled = true;
+            }
         }
 
         private void settingLabel_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)

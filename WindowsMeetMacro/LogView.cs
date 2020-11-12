@@ -1,11 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Security.Claims;
-using System.Text;
 using System.Windows.Forms;
 
 namespace WindowsMeetMacro
@@ -23,8 +16,8 @@ namespace WindowsMeetMacro
             else
             {
                 logRichTextBox.Text += text;
+                logRichTextBox.SelectionStart = logRichTextBox.Text.Length;
                 logRichTextBox.ScrollToCaret();
-                logRichTextBox.Refresh();
             }
                 
         }
