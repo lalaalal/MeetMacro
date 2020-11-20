@@ -93,18 +93,30 @@ namespace MeetMacro
 
         protected string[,] _code;
 
+        public static readonly string[] DayOfWeekCode =
+{
+            "mon", "tue", "wed", "thu", "fri"
+        };
+
+        public static readonly string[] Type =
+        {
+            "isdj", "sat"
+        };
+
         // <summary>
         // Code[dayOfWeek, classNo]
         // </summary>
         public string[,] Code { private set => _code = value; get => _code; }
 
-        public abstract void SetCode(int dayOfWeek, int classNo, string code);
+        public void SetCode(int dayOfWeek, int classNo, string code)
+            => _code[dayOfWeek, classNo] = code;
 
         public abstract void SetDefault(string classroom);
 
         public static Schedule CreateSchedule(string type) => type switch
         {
             "isdj" => new ISDJSchedule(),
+            "sat" => new SATSchedule(),
             _ => null,
         };
 
@@ -136,46 +148,6 @@ namespace MeetMacro
             else
                 return _GetNextClassNo(time, pick + 1, to);
 
-        }
-    }
-
-    public class ISDJSchedule : Schedule
-    {
-        public static readonly int MAX_CLASS_COUNT = 7;
-
-        private static readonly string[] _startTime =
-        {
-            "08:10", "08:30", "09:30", "10:30", "11:30", "13:20", "14:20", "15:20"
-        };
-
-        private static readonly string[] _endTime =
-        {
-            "08:20", "09:20", "10:20", "11:20", "12:20", "14:10", "15:10", "16:10"
-        };
-
-        private static readonly string[] dayOfWeekCode =
-        {
-            "mon", "tue", "wed", "thu", "fri"
-        };
-
-        public ISDJSchedule() : base(_startTime, _endTime, new string[5, _startTime.Length])
-        {
-
-        }
-
-        public override void SetCode(int dayOfWeek, int classNo, string code)
-            => _code[dayOfWeek, classNo] = code;
-
-        public override void SetDefault(string classroom)
-        {
-            for (int dayOfWeek = 0; dayOfWeek < 5; dayOfWeek++)
-            {
-                for (int classNo = 0; classNo < StartTime.Length; classNo++)
-                {
-                    string code = classroom + dayOfWeekCode[dayOfWeek] + string.Format("{0:00}", classNo);
-                    SetCode(dayOfWeek, classNo, code);
-                }
-            }
         }
     }
 }

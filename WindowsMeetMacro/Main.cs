@@ -45,22 +45,14 @@ namespace WindowsMeetMacro
 
                 LogView logView = new LogView();
                 SettingSaver settingSaver = SettingSaver.Instance;
-                if (settingSaver.Setting[Setting.Attributes.VIEW_LOG] == "true")
+                if (settingSaver.Setting.ViewLog)
                     logView.Show();
-
-                string scheduleType = settingSaver.Setting[Setting.Attributes.SCHEDULE_TYPE];
-                string classroom = settingSaver.Setting[Setting.Attributes.CLASSROOM];
-                int timeout = int.Parse(settingSaver.Setting[Setting.Attributes.ELEMENT_LOAD_TIMEOUT]);
-                int startOffset = int.Parse(settingSaver.Setting[Setting.Attributes.START_TIME_OFFSET]);
-                int endOffset = int.Parse(settingSaver.Setting[Setting.Attributes.END_TIME_OFFSET]);
 
                 Thread thread = new Thread(new ThreadStart(() =>
                 {
                     try
                     {
-                        ScheduleSaver scheduleSaver = new ScheduleSaver(settingSaver.Setting);
-
-                        using Macro macro = new Macro(scheduleSaver.Schedule, timeout, logView.Logger, startOffset, endOffset);
+                        using Macro macro = new Macro(settingSaver.Setting, logView.Logger);
                         macro.Run(id, pw);
                     } catch(Exception e)
                     {

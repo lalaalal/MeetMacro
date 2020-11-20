@@ -8,7 +8,7 @@
     <DelaySign>true</DelaySign>
     <AssemblyOriginatorKeyFile>WindowsMeetMacro.pfx</AssemblyOriginatorKeyFile>
     <GeneratePackageOnBuild>false</GeneratePackageOnBuild>
-    <Version>1.3</Version>
+    <Version>1.4</Version>
     <Authors>lalaalal</Authors>
     <NeutralLanguage>ko-KR</NeutralLanguage>
   </PropertyGroup>

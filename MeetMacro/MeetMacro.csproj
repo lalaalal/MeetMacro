@@ -3,7 +3,7 @@
   <PropertyGroup>
     <TargetFramework>netcoreapp3.1</TargetFramework>
     <Authors>lalaalal</Authors>
-    <Version>1.3</Version>
+    <Version>1.4</Version>
     <NeutralLanguage>ko-KR</NeutralLanguage>
     <SignAssembly>true</SignAssembly>
     <DelaySign>true</DelaySign>

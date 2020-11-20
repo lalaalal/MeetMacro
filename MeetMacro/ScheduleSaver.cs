@@ -15,16 +15,16 @@ namespace MeetMacro
             Load(defaultClassroom);
         }
 
-        public ScheduleSaver(Setting setting) : base(setting[Setting.Attributes.SCHEDULE_TYPE] + "-" + FILE_NAME)
+        public ScheduleSaver(Setting setting) : base(setting.ScheduleType + "-" + FILE_NAME)
         {
-            string scheduleType = setting[Setting.Attributes.SCHEDULE_TYPE];
-            string defaultClassroom = setting[Setting.Attributes.CLASSROOM];
+            string scheduleType = setting.ScheduleType;
+            string defaultClassroom = setting.DefaultClassroom;
 
             Schedule = Schedule.CreateSchedule(scheduleType);
             Load(defaultClassroom);
         }
 
-        public void Load(string defaultClassroomd)
+        public void Load(string defaultClassroom)
         {
             string[] lines = fileManager.Read();
 
@@ -34,7 +34,7 @@ namespace MeetMacro
                 if (lines[i].Substring(0, 2) == "//")
                     continue;
                 string[] codes = lines[i].Split(';');
-                if (codes.Length != 9)
+                if (codes.Length != Schedule.StartTime.Length + 1)
                     throw new FormatException("Length of class is not correct");
                 for (int classNo = 0; classNo < Schedule.StartTime.Length; classNo++)
                     Schedule.SetCode(dayOfWeek, classNo, codes[classNo]);
@@ -42,10 +42,10 @@ namespace MeetMacro
             }
             if (dayOfWeek == 0)
             {
-                Schedule.SetDefault(defaultClassroomd);
+                Schedule.SetDefault(defaultClassroom);
                 Save();
             }
-            else if (dayOfWeek != 5)
+            else if (dayOfWeek != Schedule.DayOfWeekCode.Length)
                 throw new FormatException("Length of day of week is not correct");
         }
 

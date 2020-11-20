@@ -9,14 +9,14 @@ namespace WindowsMeetMacro
     {
         private SettingSaver settingSaver;
         private ScheduleSaver scheduleSaver;
-        private TextBox[,] textBoxes = new TextBox[5, 7];
+        private TextBox[,] textBoxes;
 
         public ScheduleEditor()
         {
             settingSaver = SettingSaver.Instance;
 
-            string scheduleType = settingSaver.Setting[Setting.Attributes.SCHEDULE_TYPE];
-            string classroom = settingSaver.Setting[Setting.Attributes.CLASSROOM];
+            string scheduleType = settingSaver.Setting.ScheduleType;
+            string classroom = settingSaver.Setting.DefaultClassroom;
             try
             {
                 scheduleSaver = new ScheduleSaver(scheduleType, classroom);
@@ -25,18 +25,32 @@ namespace WindowsMeetMacro
                 MessageBox.Show(e.Message, "저런..");
                 scheduleSaver.Schedule.SetDefault(classroom);
             }
-            
+            Schedule schedule = scheduleSaver.Schedule;
+            textBoxes = new TextBox[Schedule.DayOfWeekCode.Length, schedule.StartTime.Length];
+
             InitializeComponent();
-            for (int dayOfWeek = 0; dayOfWeek < 5; dayOfWeek++)
+            
+            for (int classNo = 0; classNo < schedule.StartTime.Length; classNo++)
             {
-                for (int classNo = 1; classNo < 8; classNo++)
+
+                scheduleTable.RowStyles.Add(new RowStyle(SizeType.Absolute, 50F));
+                Label classNoLabel = new Label
+                {
+                    Text = classNo + "교시",
+                    Font = new System.Drawing.Font("굴림", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point),
+                    Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right,
+                    TextAlign = System.Drawing.ContentAlignment.MiddleCenter
+                };
+
+                scheduleTable.Controls.Add(classNoLabel, 0, classNo + 1);
+                for (int dayOfWeek = 0; dayOfWeek < Schedule.DayOfWeekCode.Length; dayOfWeek++)
                 {
                     TextBox textBox = new TextBox();
                     textBox.Text = scheduleSaver.Schedule.Code[dayOfWeek, classNo];
                     textBox.Anchor = AnchorStyles.Left | AnchorStyles.Right;
 
-                    textBoxes[dayOfWeek, classNo - 1] = textBox;
-                    scheduleTable.Controls.Add(textBox, dayOfWeek + 1, classNo);
+                    textBoxes[dayOfWeek, classNo] = textBox;
+                    scheduleTable.Controls.Add(textBox, dayOfWeek + 1, classNo + 1);
                 }
             }
         }

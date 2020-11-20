@@ -38,21 +38,22 @@ namespace MeetMacro
 
         private readonly int timeout;
 
-        private Logger logger;
+        private readonly Logger logger;
 
-        public Macro(Schedule schedule, int timeout, Logger logger, int startOffset = 0, int endOffset = 0)
+        public Macro(Setting setting, Logger logger)
         {
             ChromeDriverService chromeDriverService = ChromeDriverService.CreateDefaultService();
             chromeDriverService.HideCommandPromptWindow = true;
             ChromeOptions options = new ChromeOptions();
-
             driver = new ChromeDriver(chromeDriverService, options);
 
-            this.schedule = schedule;
-            this.timeout = timeout;
+            ScheduleSaver scheduleSaver = new ScheduleSaver(setting);
+            schedule = scheduleSaver.Schedule;
+            timeout = setting.ElementLoadTimeout;
+            startOffset = new Schedule.Time(0, setting.StartTimeOffset);
+            endOffset = new Schedule.Time(0, setting.EndTimeOffset);
+
             this.logger = logger;
-            this.startOffset = new Schedule.Time(0, startOffset);
-            this.endOffset = new Schedule.Time(0, endOffset);
         }
 
         public void Dispose()
