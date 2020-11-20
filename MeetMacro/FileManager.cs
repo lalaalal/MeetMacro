@@ -7,7 +7,7 @@ namespace MeetMacro
     {
         public delegate void Writer(TextWriter writer);
 
-        private static string DirectoryPath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), @"MeetMacro");
+        public static string DirectoryPath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), @"MeetMacro");
         public string FilePath { private set; get; }
 
         public FileManager(string fileName)
