@@ -186,6 +186,6 @@ namespace MeetMacro
             => Schedule.Time.Now >= endTime + offset;
 
         private bool DoesSchoolEnd()
-            => Schedule.Time.Now >= schedule.EndTime[7];
+            => Schedule.Time.Now >= schedule.EndTime[schedule.EndTime.Length - 1];
     }
 }
